@@ -1,3 +1,5 @@
+%% Author : Krishna Satish D S
+
 function BackPropAlgorithm()
     %% Dataset parameters
     sepal_l_Min = 4.3;
@@ -68,8 +70,6 @@ function BackPropAlgorithm()
     close(h)
     %% Error Plots
     sse=sum((error(:,1:iterator_i).^2),1);
-    figure;
-    hold on;
     plot(sse);
     title('Error Plot-Training');
     xlabel('Number Of Iterations');

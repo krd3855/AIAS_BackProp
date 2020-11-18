@@ -11,3 +11,5 @@ Please follow the steps to run this script
 	a. Load the saved Weights from Weights.mat file
 	b. Run the Neural Network and give out probabilities
 	c. Plots the bar graph to show the outputs of prediction
+
+By : Krishna Satish D S

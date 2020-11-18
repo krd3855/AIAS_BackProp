@@ -1,3 +1,5 @@
+%% Author : Krishna Satish D S
+
 %% Loading The Weights
 load('Weights.mat')    %% Loading Weights
 %% Testing 
