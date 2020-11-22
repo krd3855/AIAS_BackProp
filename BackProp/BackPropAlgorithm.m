@@ -28,12 +28,13 @@ function BackPropAlgorithm()
     n_data = [n_sepal_l, n_sepal_w,  n_petal_l, n_petal_w];
     %% Network parameters
     Number_Input = 4;
-    Number_Of_Hidden_Nodes = 6;
+    Number_Of_Hidden_Nodes = 5;
     Number_Of_Outputs = 3;
     Learning_Rate = 0.09;
-    Iteration=12000;
+    Iteration=5000;
     Weight_Input_Hidden = rand(Number_Input,Number_Of_Hidden_Nodes);
     Weight_Bias_Hidden = rand(Number_Of_Hidden_Nodes,1);
+    Weight_Bias_Output = rand(Number_Of_Outputs,1);
     Weight_Hidden = rand(Number_Of_Hidden_Nodes,Number_Of_Outputs);
     error=zeros(Number_Of_Outputs,Iteration);
     %% Shuffling Training Data 
@@ -52,13 +53,14 @@ function BackPropAlgorithm()
             Input_Layer_Weight = Shuffled_Data(:,iterator_j)'*Weight_Input_Hidden;  %% Wx --> Input layer to first hidden layer
             Input_Layer_Weight_Bias = Input_Layer_Weight + Weight_Bias_Hidden';  %% Wx + b
             Hidden_Layer_Input = sigmoid(Input_Layer_Weight_Bias);   %% Sigmoid Activation Function
-            Hidden_Layer_temp = Hidden_Layer_Input *  Weight_Hidden;  %% Hidden Layer Inputs multiplied with Hidden Layer Weights
+            Hidden_Layer_temp = (Hidden_Layer_Input *  Weight_Hidden) + Weight_Bias_Output';  %% Hidden Layer Inputs multiplied with Hidden Layer Weights
             Final_Output = sigmoid(Hidden_Layer_temp);
             %% Finding Error
             Err = Desired_out(:,iterator_j)'-Final_Output;   %% Difference b/w output and labelled output
             Delta = (Final_Output.*(1-Final_Output)).* Err;   %% Finding out the Partial derivative 
             %% Updading Weights
             Weight_Hidden=Weight_Hidden+Learning_Rate*Hidden_Layer_Input'*Delta;  %% Updating Hidden Layer Weights
+            Weight_Bias_Output = Weight_Bias_Output + (2*Delta');                 %% Updading Biases
             %% Updating Input Layer Weights
             Delta_Hidden = Hidden_Layer_Input'.*(1-Hidden_Layer_Input)'.*(Weight_Hidden*Delta');
             Weight_Input_Hidden=Weight_Input_Hidden+Learning_Rate*(Shuffled_Data(:,iterator_j)*Delta_Hidden');
